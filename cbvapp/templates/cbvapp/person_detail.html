@@ -1,0 +1,52 @@
+{% extends "index.html" %}
+{% load staticfiles%}
+{% block main %}
+  <div class="container-fluid">
+    <div class="row" style='background:url("{% static "background.jpeg"%}")'>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-head">
+            <h2 class='card-title'>{{person.name}}</h2>
+          </div>
+          <div class="card-body">
+            <img src="/media/{{person.profile_pic}}" class='card-img' alt="">
+          </div>
+          <div class="card-footer">
+            <button type="button" class='btn btn-warning btn-block' name="button"><a style='text-decoration:none;' href="{% url "cbvapp:update" pk=person.id %}" >Update profile</a></button>
+            <button type="button" class='btn btn-danger btn-block' name="button"><a href="{% url "cbvapp:delete" pk=person.id %}" style='text-decoration:none;'>Delete User</a></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 text-center text-dark my-5" style='background:rgba(255,255,255,0.5)'>
+        <h1 style='font-family:cursive'>{{person.name}} </h1>
+        <h2>{{person.age}} years old</h2>
+        <small>{{person.email}}</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        {% if not person.students %}
+        <h1 class='alert alert-info text-center'>Here are the issued books by {{person.name}}</h1>
+        {% else %}
+        <h1 class='alert alert-info text-center'>No Book Issues</h1>
+        {% endif %}
+        <div class="card-columns">
+          {% for i in person.issues.all %}
+            <div class="card">
+                <div class="card-header p-2">
+                  <img src="/media/{{i.cover}}" height=200 alt="No Image" class='card-img'>
+                </div>
+                <div class="card-body text-center">
+                  <h2 class='card-title'>{{i.book_name}}</h2>
+                  <small>-Issued by {{i.student}}</small>
+                  <h5>{{i.author}}</h5>
+                  <p>on {{i.Issued_on}}</p>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+    {% endblock %}

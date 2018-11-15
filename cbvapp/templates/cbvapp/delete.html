@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+{% block main %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <h2 class='text-danger'> Are You Sure want to delete <strong>{{person.name}}</strong> </h2>
+        <ul>
+          <li>After delete you will not see this user again</li>
+          <li>It will not recover</li>
+        </ul>
+        <form method="post">
+          {% csrf_token %}
+          <input type="submit" name="" class='btn btn-danger' value="Yes I am sure">
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

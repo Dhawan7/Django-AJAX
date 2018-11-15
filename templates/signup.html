@@ -1,0 +1,80 @@
+{% extends "index.html"%}
+{% load bootstrap4 %}
+{% block head %}
+
+  <!-- CODE FOR SEARCH USER -->
+    <script>
+      $(function(){
+        $('#id_username').change(function(){
+          var username = $(this).val();
+          $.ajax({
+            url:"{% url "cbvapp:check"%}",
+            data:{'username':username},
+            success:function(data){
+              if(data.c){
+                $('.form-text').html("<div class='pl-2 text-danger'><i class='fas fa-times text-danger'></i> A user with this username already exits</div>")
+                $('#id_username').css({border:'1px solid red'});
+              }
+              else{
+                $('.form-text').html("<div class='pl-2 text-success'><i class='fas fa-check text-success'></i> Username validated Successfully</div>")
+                $('#id_username').css({border:'1px solid green'})
+
+              }
+            }
+          });
+        });
+  // CODE FOR CHECK USER
+        $('#cont').keypress(function(){
+          var a = $(this).val();
+          $.ajax({
+            url:'{% url "cbvapp:search"%}',
+            data:{'username':a},
+            success:function(data){
+              var a = '';
+              for(i in data){
+                a += "<tr>";
+                a += "<td>"+data[i].pk+"</td>";
+                a += "<td>"+data[i].fields.username+"</td>";
+                a += "<td>"+data[i].fields.email+"</td>";
+                a += "</tr>";
+
+              }
+              $('.tb').html(a);
+            }
+          })
+
+        });
+      });
+    </script>
+{% endblock %}
+{% block main %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class='text-center'>Search Users</h2>
+        <input type="text" name="" id='cont' placeholder="Search by username..." class='my-3 form-control'>
+        <table class='table table-striped'>
+          <thead class='bg-dark text-light'>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody class='tb'>
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col-md-6 p-3 mx-auto" style='border:2px solid gray;'>
+        <form class=""  method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form user %}
+          {% bootstrap_form profile %}
+          <input type="submit" name="signup" value="Sign Up" class='btn btn-primary btn-block '>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% block main %}
+{% load bootstrap4 %}
+<div class="container-fluid">
+  <div class="row bg-dark py-4">
+      <div class="col-md-4 bg-light p-4 mx-auto">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <input type="submit" name="create" value="Save">
+        </form>
+      </div>
+  </div>
+</div>
+{% endblock %}

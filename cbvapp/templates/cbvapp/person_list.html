@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block main %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 py-5">
+      <ul class='list-group'>
+        {% for i in person %}
+          <li class='list-group-item list-group-item-action'> <a href="{{i.id}}"> {{i.id}} &nbsp; {{i.name}} </a> </li>
+        {% endfor %}
+      </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

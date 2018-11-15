@@ -1,0 +1,20 @@
+{% extends "index.html "%}
+{% block main %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 m-5 p-1 mx-auto" style='border:2px solid gray;'>
+      <form class=""  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" name="username" placeholder="Enter Username" class='form-control'>
+        </div>
+        <div class="form-group">
+          <input type="password" name="password" placeholder="Enter Password" class='form-control'>
+        </div>
+        <input type="submit" name="signup" value="Sign In" class='btn btn-success btn-block '>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
